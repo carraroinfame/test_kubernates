@@ -1,13 +1,20 @@
 FROM centos:7
 MAINTAINER shikhardevops@gmail.com
-RUN yum install -y httpd \
- zip\
- unzip
+
+# Installa httpd (Apache), zip e unzip usando yum, poiché apt non è disponibile su CentOS
+RUN yum install -y httpd zip unzip wget
+
+# Scarica il file ZIP e lavora nella directory corretta
 RUN wget -O /var/www/html/photogenic.zip https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip
 WORKDIR /var/www/html/
 
+# Decomprimi il file e sposta i contenuti nella directory corretta
 RUN unzip photogenic.zip
 RUN cp -rvf photogenic/* .
 RUN rm -rf photogenic photogenic.zip
+
+# Esegui Apache in primo piano per mantenere il container attivo
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
+
+# Espone le porte 80 e 443 per HTTP e HTTPS
 EXPOSE 80 443
