@@ -19,6 +19,5 @@ RUN rm -rf photogenic photogenic.zip
 
 # Esegui Apache in primo piano per mantenere il container attivo
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
-
 # Espone le porte 80 e 443 per HTTP e HTTPS
 EXPOSE 80 443
