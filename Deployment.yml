@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+   name: firstapp
+spec:
+   replicas: 2
+   selector:
+    matchLabels:
+     app: firstapp
+   template:
+      metadata:
+        labels:
+          app: firstapp
+      spec:
+       containers:
+        - name: firstapp
+          image: mandriano/pipeline-demo
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 80
