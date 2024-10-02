@@ -1,8 +1,12 @@
 FROM centos:7
 MAINTAINER shikhardevops@gmail.com
 
-# Installa httpd (Apache), zip e unzip usando yum, poiché apt non è disponibile su CentOS
-RUN yum install -y httpd zip unzip wget
+# Aggiorna i repository per puntare a CentOS Vault
+RUN sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-Base.repo && \
+    sed -i 's|^#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-Base.repo
+
+# Pulisci la cache e installa httpd, zip, unzip, wget
+RUN yum clean all && yum makecache && yum install -y httpd zip unzip wget
 
 # Scarica il file ZIP e lavora nella directory corretta
 RUN wget -O /var/www/html/photogenic.zip https://www.free-css.com/assets/files/free-css-templates/download/page254/photogenic.zip
